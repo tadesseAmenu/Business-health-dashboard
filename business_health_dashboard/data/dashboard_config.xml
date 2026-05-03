@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="starting_balance_param" model="ir.config_parameter">
+        <field name="key">business_dashboard.starting_balance</field>
+        <field name="value">0.0</field>
+    </record>
+    <record id="cash_alert_threshold_param" model="ir.config_parameter">
+        <field name="key">business_dashboard.cash_alert_threshold</field>
+        <field name="value">1000.0</field>
+    </record>
+    <record id="expense_ratio_alert_threshold_param" model="ir.config_parameter">
+        <field name="key">business_dashboard.expense_ratio_alert_threshold</field>
+        <field name="value">70.0</field>
+    </record>
+    <record id="revenue_alert_threshold_param" model="ir.config_parameter">
+        <field name="key">business_dashboard.revenue_alert_threshold</field>
+        <field name="value">1000.0</field>
+    </record>
+    <record id="net_profit_alert_threshold_param" model="ir.config_parameter">
+        <field name="key">business_dashboard.net_profit_alert_threshold</field>
+        <field name="value">0.0</field>
+    </record>
+    <record id="profit_margin_alert_threshold_param" model="ir.config_parameter">
+        <field name="key">business_dashboard.profit_margin_alert_threshold</field>
+        <field name="value">10.0</field>
+    </record>
+</odoo>

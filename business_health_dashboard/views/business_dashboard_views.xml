@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_business_dashboard_form" model="ir.ui.view">
+        <field name="name">business.dashboard.form</field>
+        <field name="model">business.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Business Health Dashboard" create="0" edit="0" delete="0" duplicate="0">
+                <sheet class="bhd_dashboard">
+                    <div class="bhd_header">
+                        <div>
+                            <h1 class="bhd_title">Business Health Dashboard</h1>
+                            <p class="bhd_subtitle">A streamlined view of revenue, cost, profitability, and risk signals.</p>
+                        </div>
+                        <div>
+                            <button name="action_refresh" string="Refresh" type="object" class="btn btn-primary" icon="fa-refresh"/>
+                            <button name="action_print_dashboard" string="Print Dashboard" type="object" class="btn btn-secondary" icon="fa-print"/>
+                        </div>
+                    </div>
+
+                    <group class="bhd_filters">
+                        <group>
+                            <field name="date_from"/>
+                        </group>
+                        <group>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+
+                    <field name="currency_id" invisible="1"/>
+
+                    <h3 class="bhd_section_title">Key Performance Indicators</h3>
+                    <div class="bhd_card_grid">
+                        <div class="bhd_card">
+                            <span class="bhd_card_icon"><i class="fa fa-line-chart" title="Revenue"/></span>
+                            <div class="bhd_card_label">Total Revenue</div>
+                            <div class="bhd_card_value"><field name="total_revenue" widget="monetary" nolabel="1"/></div>
+                        </div>
+                        <div class="bhd_card">
+                            <span class="bhd_card_icon"><i class="fa fa-credit-card" title="Expenses"/></span>
+                            <div class="bhd_card_label">Total Expenses</div>
+                            <div class="bhd_card_value"><field name="total_expenses" widget="monetary" nolabel="1"/></div>
+                        </div>
+                        <div class="bhd_card">
+                            <span class="bhd_card_icon"><i class="fa fa-database" title="Net Profit"/></span>
+                            <div class="bhd_card_label">Net Profit</div>
+                            <div class="bhd_card_value"><field name="net_profit" widget="monetary" nolabel="1"/></div>
+                        </div>
+                        <div class="bhd_card">
+                            <span class="bhd_card_icon"><i class="fa fa-percent" title="Profit Margin"/></span>
+                            <div class="bhd_card_label">Profit Margin</div>
+                            <div class="bhd_card_value"><field name="profit_margin" widget="percentage" nolabel="1"/></div>
+                        </div>
+                        <div class="bhd_card">
+                            <span class="bhd_card_icon"><i class="fa fa-pie-chart" title="Expense Ratio"/></span>
+                            <div class="bhd_card_label">Expense Ratio</div>
+                            <div class="bhd_card_value"><field name="expense_ratio" widget="percentage" nolabel="1"/></div>
+                        </div>
+                        <div class="bhd_card">
+                            <span class="bhd_card_icon"><i class="fa fa-briefcase" title="Cash Balance"/></span>
+                            <div class="bhd_card_label">Cash Balance</div>
+                            <div class="bhd_card_value"><field name="cash_balance" widget="monetary" nolabel="1"/></div>
+                            <div class="bhd_card_hint">
+                                Opening: <field name="opening_balance" widget="monetary" nolabel="1"/> + Net Profit
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="bhd_section_title">Alerts</h3>
+                    <div class="bhd_alert_box">
+                        <field name="alert_message" nolabel="1" readonly="1"/>
+                    </div>
+
+                    <h3 class="bhd_section_title">Quick Analysis</h3>
+                    <div class="bhd_analysis_grid">
+                        <div class="bhd_analysis_card">
+                            <h4 class="bhd_analysis_title">Revenue vs Expenses</h4>
+                            <p class="bhd_analysis_desc">Compare income and operating costs over the selected period.</p>
+                            <button name="action_view_revenue_graph" string="Open Revenue Graph" type="object" class="btn btn-outline-primary"/>
+                        </div>
+                        <div class="bhd_analysis_card">
+                            <h4 class="bhd_analysis_title">Expense Trend</h4>
+                            <p class="bhd_analysis_desc">Review the expense pattern and spot potential anomalies quickly.</p>
+                            <button name="action_view_expense_graph" string="Open Expense Graph" type="object" class="btn btn-outline-primary"/>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for dashboard -->
+    <record id="action_business_dashboard" model="ir.actions.act_window">
+        <field name="name">Business Health Dashboard</field>
+        <field name="res_model">business.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p>View key business metrics and alerts.</p>
+        </field>
+    </record>
+
+    <!-- Menu item for dashboard -->
+    <menuitem id="menu_business_dashboard" name="Dashboard" parent="menu_expense_tracker_root" action="action_business_dashboard" sequence="5"/>
+</odoo>

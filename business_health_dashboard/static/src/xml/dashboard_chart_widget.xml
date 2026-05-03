@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="business_health_dashboard.BhdChartWidget">
+        <div class="bhd_chart_widget">
+            <canvas t-ref="canvas" class="bhd_chart_canvas"></canvas>
+        </div>
+    </t>
+</templates>

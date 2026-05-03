@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_expense_entry" model="ir.actions.report">
+        <field name="name">Expense Report</field>
+        <field name="model">expense.tracker.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">business_health_dashboard.expense_entry_report</field>
+        <field name="report_file">business_health_dashboard.expense_entry_report</field>
+        <field name="binding_model_id" ref="business_health_dashboard.model_expense_tracker_entry"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="expense_entry_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Expense Report</h2>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td><span t-field="o.date"/></td>
+                                    <td><span t-field="o.name"/></td>
+                                    <td><span t-field="o.category"/></td>
+                                    <td><span t-field="o.amount"/></td>
+                                    <td><span t-field="o.note"/></td>
+                                </tr>
+                            </t>
+                            <t t-if="docs">
+                                <t t-set="total" t-value="sum(docs.mapped('amount'))"/>
+                                <tr class="font-weight-bold">
+                                    <td colspan="3" class="text-right">Total:</td>
+                                    <td>
+                                        <span t-esc="total" t-options='{"widget": "monetary", "display_currency": docs[0].currency_id}'/>
+                                    </td>
+                                    <td/>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

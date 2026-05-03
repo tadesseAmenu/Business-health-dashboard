@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_expense_tracker_entry_user,expense.tracker.entry user,model_expense_tracker_entry,base.group_user,1,1,1,1
+access_expense_tracker_entry_manager,expense.tracker.entry manager,model_expense_tracker_entry,business_health_dashboard.group_business_health_manager,1,1,1,1
+access_business_revenue_user,business.revenue user,model_business_revenue,base.group_user,1,1,1,1
+access_business_revenue_manager,business.revenue manager,model_business_revenue,business_health_dashboard.group_business_health_manager,1,1,1,1
+access_business_dashboard_user,business.dashboard user,model_business_dashboard,base.group_user,1,1,1,1

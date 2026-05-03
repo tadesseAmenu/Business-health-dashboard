@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_business_dashboard" model="ir.actions.report">
+        <field name="name">Business Dashboard Report</field>
+        <field name="model">business.dashboard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">business_health_dashboard.dashboard_report</field>
+        <field name="report_file">business_health_dashboard.dashboard_report</field>
+        <field name="binding_model_id" ref="model_business_dashboard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="dashboard_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="company" t-value="o.company_id or o.env.company"/>
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div style="margin-bottom: 14px;">
+                            <h3 style="margin: 0 0 6px 0;" t-esc="company.name or ''"/>
+                            <div t-if="company.street" t-esc="company.street"/>
+                            <div>
+                                <t t-if="company.city"><span t-esc="company.city"/></t>
+                                <t t-if="company.state_id">, <span t-esc="company.state_id.name"/></t>
+                                <t t-if="company.zip"> <span t-esc="company.zip"/></t>
+                            </div>
+                            <div t-if="company.country_id" t-esc="company.country_id.name"/>
+                        </div>
+
+                        <h2>Business Health Dashboard</h2>
+                        <p>
+                            <strong>Period:</strong>
+                            <span t-field="o.date_from"/> - <span t-field="o.date_to"/>
+                        </p>
+
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>KPI</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Total Revenue</td>
+                                    <td><span t-field="o.total_revenue"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Total Expenses</td>
+                                    <td><span t-field="o.total_expenses"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Net Profit</td>
+                                    <td><span t-field="o.net_profit"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Profit Margin</td>
+                                    <td><span t-esc="'{:.2f}%'.format(o.profit_margin or 0.0)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Expense Ratio</td>
+                                    <td><span t-esc="'{:.2f}%'.format(o.expense_ratio or 0.0)"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Opening Balance</td>
+                                    <td><span t-field="o.opening_balance"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Cash Balance</td>
+                                    <td><span t-field="o.cash_balance"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

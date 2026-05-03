@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree view -->
+    <record id="view_business_revenue_tree" model="ir.ui.view">
+        <field name="name">business.revenue.tree</field>
+        <field name="model">business.revenue</field>
+        <field name="arch" type="xml">
+            <tree string="Revenues" default_order="date desc">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="amount" sum="Total"/>
+                <field name="user_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_business_revenue_form" model="ir.ui.view">
+        <field name="name">business.revenue.form</field>
+        <field name="model">business.revenue</field>
+        <field name="arch" type="xml">
+            <form string="Revenue">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="user_id" groups="base.group_user"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="note" placeholder="Add details..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban view -->
+    <record id="view_business_revenue_kanban" model="ir.ui.view">
+        <field name="name">business.revenue.kanban</field>
+        <field name="model">business.revenue</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" default_group_by="category">
+                <field name="name"/>
+                <field name="category"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="user_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="o_kanban_record_top">
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div class="text-muted"><field name="category"/></div>
+                            <div><field name="date"/></div>
+                            <div class="mt-2"><field name="amount" widget="monetary" options="{'currency_field': 'currency_id'}"/></div>
+                            <div class="text-muted mt-1">Owner: <field name="user_id"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_business_revenue_search" model="ir.ui.view">
+        <field name="name">business.revenue.search</field>
+        <field name="model">business.revenue</field>
+        <field name="arch" type="xml">
+            <search string="Search Revenues">
+                <field name="name"/>
+                <field name="category"/>
+                <field name="date"/>
+                <field name="user_id"/>
+                <filter name="group_by_category" string="Category" context="{'group_by': 'category'}"/>
+                <filter name="group_by_month" string="Month" context="{'group_by': 'month_label'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Graph view -->
+    <record id="view_business_revenue_graph" model="ir.ui.view">
+        <field name="name">business.revenue.graph</field>
+        <field name="model">business.revenue</field>
+        <field name="arch" type="xml">
+            <graph string="Revenue Analysis" type="bar">
+                <field name="date" type="row" interval="month"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot view -->
+    <record id="view_business_revenue_pivot" model="ir.ui.view">
+        <field name="name">business.revenue.pivot</field>
+        <field name="model">business.revenue</field>
+        <field name="arch" type="xml">
+            <pivot string="Revenue Pivot">
+                <field name="date" type="row" interval="month"/>
+                <field name="category" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_business_revenue" model="ir.actions.act_window">
+        <field name="name">Revenues</field>
+        <field name="res_model">business.revenue</field>
+        <field name="view_mode">kanban,tree,form,graph,pivot</field>
+        <field name="context">{'search_default_group_by_month': 1}</field>
+        <field name="search_view_id" ref="view_business_revenue_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first revenue entry</p>
+        </field>
+    </record>
+
+    <!-- Menu items -->
+    <menuitem id="menu_business_revenue" name="Revenues" parent="menu_expense_tracker_root" action="action_business_revenue" sequence="20"/>
+</odoo>
